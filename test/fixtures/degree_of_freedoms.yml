@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  direction: MyString
+  fixed: false
+  displacement: 1.5
+  reaction: 1.5
+
+two:
+  direction: MyString
+  fixed: false
+  displacement: 1.5
+  reaction: 1.5
