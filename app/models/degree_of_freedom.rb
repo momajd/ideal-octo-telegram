@@ -1,8 +1,10 @@
 class DegreeOfFreedom < ApplicationRecord
-  validates :direction, inclusion: {in: ["x", "y"],
-      message: "%{value} not a valid direction"}
+  has_one :node_x, class_name: "Node", foreign_key: :dof_x_id
+  has_one :node_y, class_name: "Node", foreign_key: :dof_y_id
 
-  belongs_to :node
+  validates :fixed, inclusion: {in: [true, false]}
+  validates :direction, inclusion: {in: ["x", "y"],
+    message: "%{value} not a valid direction"}
 
   def fixed?
     self.fixed

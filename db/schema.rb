@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171103015809) do
+ActiveRecord::Schema.define(version: 20171105123953) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,8 +22,15 @@ ActiveRecord::Schema.define(version: 20171103015809) do
     t.float "reaction"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "node_id"
-    t.index ["node_id"], name: "index_degree_of_freedoms_on_node_id"
+  end
+
+  create_table "loads", force: :cascade do |t|
+    t.integer "node_id", null: false
+    t.string "direction", null: false
+    t.float "magnitude", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["node_id"], name: "index_loads_on_node_id"
   end
 
   create_table "nodes", force: :cascade do |t|
@@ -31,6 +38,10 @@ ActiveRecord::Schema.define(version: 20171103015809) do
     t.float "y_coord", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "dof_x_id"
+    t.integer "dof_y_id"
+    t.index ["dof_x_id"], name: "index_nodes_on_dof_x_id"
+    t.index ["dof_y_id"], name: "index_nodes_on_dof_y_id"
   end
 
 end
