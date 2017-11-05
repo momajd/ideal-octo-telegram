@@ -4,28 +4,35 @@ class Node < ApplicationRecord
   has_many :loads
 
   validates :x_coord, :y_coord, presence: true
-  after_initialize :create_dofs
+  after_initialize :load_dofs
 
   def x_fixed?
-    self.dof_x.fixed?
+    @dof_x.fixed?
   end
 
   def y_fixed?
-    self.dof_y.fixed?
+    @dof_y.fixed?
   end
 
   def add_restraint!(direction)
     if direction == "x"
-      self.dof_x.fixed = true
+      @dof_x.fixed = true
     elsif direction == "y"
-      self.dof_y.fixed = true
+      @dof_y.fixed = true
     end
   end
 
+  def total_load(direction)
+    return unless ["x", "y"].include?(direction)
+    self.loads.where(direction: direction).sum(:magnitude)
+  end
+
   private
-  def create_dofs
-    return unless self.dof_x.nil?
-    self.build_dof_x(direction: "x")
-    self.build_dof_y(direction: "y")
+  def load_dofs
+    return if @dof_x || @dof_y
+    @dof_x, @dof_y = self.dof_x, self.dof_y
+
+    self.build_dof_x(direction: "x") unless @dof_x
+    self.build_dof_y(direction: "y") unless @dof_y
   end
 end
