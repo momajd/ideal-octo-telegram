@@ -10,19 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171105123953) do
+ActiveRecord::Schema.define(version: 20171114032210) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "degree_of_freedoms", force: :cascade do |t|
-    t.string "direction", null: false
-    t.boolean "fixed", default: false
-    t.float "displacement"
-    t.float "reaction"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "loads", force: :cascade do |t|
     t.integer "node_id", null: false
@@ -33,15 +24,64 @@ ActiveRecord::Schema.define(version: 20171105123953) do
     t.index ["node_id"], name: "index_loads_on_node_id"
   end
 
+  create_table "materials", force: :cascade do |t|
+    t.float "elastic_modulus", null: false
+    t.float "area", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "truss_id"
+    t.index ["truss_id"], name: "index_materials_on_truss_id"
+  end
+
+  create_table "members", force: :cascade do |t|
+    t.integer "near_node_id", null: false
+    t.integer "far_node_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "material_id"
+    t.integer "truss_id"
+    t.index ["far_node_id"], name: "index_members_on_far_node_id"
+    t.index ["material_id"], name: "index_members_on_material_id"
+    t.index ["near_node_id"], name: "index_members_on_near_node_id"
+    t.index ["truss_id"], name: "index_members_on_truss_id"
+  end
+
   create_table "nodes", force: :cascade do |t|
     t.float "x_coord", null: false
     t.float "y_coord", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "dof_x_id"
-    t.integer "dof_y_id"
-    t.index ["dof_x_id"], name: "index_nodes_on_dof_x_id"
-    t.index ["dof_y_id"], name: "index_nodes_on_dof_y_id"
+    t.integer "truss_id"
+    t.index ["truss_id"], name: "index_nodes_on_truss_id"
+  end
+
+  create_table "trusses", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "x_degree_of_freedoms", force: :cascade do |t|
+    t.boolean "fixed", default: false
+    t.float "displacement"
+    t.float "reaction"
+    t.integer "node_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "matrix_row_i"
+    t.index ["matrix_row_i"], name: "index_x_degree_of_freedoms_on_matrix_row_i"
+    t.index ["node_id"], name: "index_x_degree_of_freedoms_on_node_id"
+  end
+
+  create_table "y_degree_of_freedoms", force: :cascade do |t|
+    t.boolean "fixed", default: false
+    t.float "displacement"
+    t.float "reaction"
+    t.integer "node_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "matrix_row_i"
+    t.index ["matrix_row_i"], name: "index_y_degree_of_freedoms_on_matrix_row_i"
+    t.index ["node_id"], name: "index_y_degree_of_freedoms_on_node_id"
   end
 
 end
