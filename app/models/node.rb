@@ -13,21 +13,16 @@ class Node < ApplicationRecord
   end
 
   def x_fixed?
-    @dof_x.fixed?
+    x_degree_of_freedom.fixed?
   end
 
   def y_fixed?
-    @dof_y.fixed?
+    y_degree_of_freedom.fixed?
   end
 
   def add_restraint!(direction)
-    if direction == "x"
-      @dof_x.fixed = true
-      @dof_x.save!
-    elsif direction == "y"
-      @dof_y.fixed = true
-      @dof_y.save!
-    end
+    x_degree_of_freedom.update!(fixed: true) if direction == "x"
+    y_degree_of_freedom.update!(fixed: true) if direction == "y"
   end
 
   def total_load(direction)
@@ -37,10 +32,9 @@ class Node < ApplicationRecord
 
   private
   def load_dofs
-    return if @dof_x || @dof_y
-    @dof_x, @dof_y = self.x_degree_of_freedom, self.y_degree_of_freedom
+    return if self.x_degree_of_freedom || self.y_degree_of_freedom
 
-    self.build_x_degree_of_freedom unless @dof_x
-    self.build_y_degree_of_freedom unless @dof_y
+    self.build_x_degree_of_freedom
+    self.build_y_degree_of_freedom
   end
 end

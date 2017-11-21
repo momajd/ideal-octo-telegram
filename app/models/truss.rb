@@ -1,4 +1,4 @@
-require_relative '../../lib/matrix.rb'
+# require_relative '../../lib/extend_matrix.rb'
 
 class Truss < ApplicationRecord
   has_many :members, dependent: :destroy
@@ -15,7 +15,7 @@ class Truss < ApplicationRecord
   # private
   def assign_stiff_matrix_rows!
     dofs = degree_of_freedoms.sort_by {|dof| dof.free? ? 0 : 1} #order free dofs first
-    dofs.each_with_index{|dof, i| dof.matrix_row_i = i}
+    dofs.each_with_index{|dof, i| dof.update(matrix_row_i: i)}
   end
 
   def stiffness_matrix
@@ -62,7 +62,6 @@ class Truss < ApplicationRecord
       applied_loads << dof.node.total_load(dof.direction)
     end
 
-    #forces = stiffness_matrix * deflections
     augmented_matrix = sub_stiffness_matrix.augment(applied_loads)
     displacements  = augmented_matrix.gauss_jordan
   end

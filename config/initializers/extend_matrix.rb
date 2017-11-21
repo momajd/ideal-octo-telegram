@@ -1,5 +1,6 @@
+# extend Ruby's Matrix class
+# This needs to be 'auto-loaded' by Rails
 require 'matrix'
-#extend Ruby's Matrix class
 
 class Matrix
 
