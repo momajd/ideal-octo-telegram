@@ -12,23 +12,28 @@ class Truss < ApplicationRecord
     x_degree_of_freedoms + y_degree_of_freedoms
   end
 
-  # private
+  # private TODO
   def assign_stiff_matrix_rows!
     dofs = degree_of_freedoms.sort_by {|dof| dof.free? ? 0 : 1} #order free dofs first
-    dofs.each_with_index{|dof, i| dof.update(matrix_row_i: i)}
+    dofs.each_with_index{|dof, i| dof.update!(matrix_row_i: i)}
   end
 
   def stiffness_matrix
-    n = degree_of_freedoms
+    n = degree_of_freedoms.length
     matrix = Matrix.build(n, n) {0}
 
     self.members.each do |member|
-      length, lamba_x, lambda_y = member.length, member.lambda_x, member.lambda_y
+      length, lambda_x, lambda_y = member.length, member.lambda_x, member.lambda_y
 
       i1 = member.near_node.x_degree_of_freedom.matrix_row_i
       i2 = member.near_node.y_degree_of_freedom.matrix_row_i
       i3 = member.far_node.x_degree_of_freedom.matrix_row_i
       i4 = member.far_node.y_degree_of_freedom.matrix_row_i
+
+      matrix[i1, i1] += lambda_x**2 / length
+      matrix[i1, i2] += lambda_x * lambda_y / length
+      matrix[i1, i3] += -lambda_x**2 / length
+      matrix[i1, i4] += -lambda_x * lambda_y / length
 
       matrix[i2, i1] += lambda_x * lambda_y / length
       matrix[i2, i2] += lambda_y**2 / length

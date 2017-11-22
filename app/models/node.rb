@@ -21,6 +21,7 @@ class Node < ApplicationRecord
   end
 
   def add_restraint!(direction)
+    return unless ["x", "y"].include?(direction)
     x_degree_of_freedom.update!(fixed: true) if direction == "x"
     y_degree_of_freedom.update!(fixed: true) if direction == "y"
   end
@@ -33,7 +34,6 @@ class Node < ApplicationRecord
   private
   def load_dofs
     return if self.x_degree_of_freedom || self.y_degree_of_freedom
-
     self.build_x_degree_of_freedom
     self.build_y_degree_of_freedom
   end

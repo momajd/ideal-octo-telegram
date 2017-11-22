@@ -15,7 +15,7 @@ class Member < ApplicationRecord
     (far_node.x_coord - near_node.x_coord) / length
   end
 
-  def lamda_y
+  def lambda_y
     (far_node.y_coord - near_node.y_coord) / length
   end
 end
