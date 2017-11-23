@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171114032210) do
+ActiveRecord::Schema.define(version: 20171123200353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,8 +67,8 @@ ActiveRecord::Schema.define(version: 20171114032210) do
     t.integer "node_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "matrix_row_i"
-    t.index ["matrix_row_i"], name: "index_x_degree_of_freedoms_on_matrix_row_i"
+    t.integer "matrix_row"
+    t.index ["matrix_row"], name: "index_x_degree_of_freedoms_on_matrix_row"
     t.index ["node_id"], name: "index_x_degree_of_freedoms_on_node_id"
   end
 
@@ -79,8 +79,8 @@ ActiveRecord::Schema.define(version: 20171114032210) do
     t.integer "node_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "matrix_row_i"
-    t.index ["matrix_row_i"], name: "index_y_degree_of_freedoms_on_matrix_row_i"
+    t.integer "matrix_row"
+    t.index ["matrix_row"], name: "index_y_degree_of_freedoms_on_matrix_row"
     t.index ["node_id"], name: "index_y_degree_of_freedoms_on_node_id"
   end
 

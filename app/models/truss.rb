@@ -15,7 +15,7 @@ class Truss < ApplicationRecord
   # private TODO
   def assign_stiff_matrix_rows!
     dofs = degree_of_freedoms.sort_by {|dof| dof.free? ? 0 : 1} #order free dofs first
-    dofs.each_with_index{|dof, i| dof.update!(matrix_row_i: i)}
+    dofs.each_with_index{|dof, i| dof.update!(matrix_row: i)}
   end
 
   def stiffness_matrix
@@ -25,10 +25,10 @@ class Truss < ApplicationRecord
     self.members.each do |member|
       length, lambda_x, lambda_y = member.length, member.lambda_x, member.lambda_y
 
-      i1 = member.near_node.x_degree_of_freedom.matrix_row_i
-      i2 = member.near_node.y_degree_of_freedom.matrix_row_i
-      i3 = member.far_node.x_degree_of_freedom.matrix_row_i
-      i4 = member.far_node.y_degree_of_freedom.matrix_row_i
+      i1 = member.near_node.x_degree_of_freedom.matrix_row
+      i2 = member.near_node.y_degree_of_freedom.matrix_row
+      i3 = member.far_node.x_degree_of_freedom.matrix_row
+      i4 = member.far_node.y_degree_of_freedom.matrix_row
 
       matrix[i1, i1] += lambda_x**2 / length
       matrix[i1, i2] += lambda_x * lambda_y / length
@@ -55,19 +55,19 @@ class Truss < ApplicationRecord
 
   def solve_displacements!
     free_dofs = x_degree_of_freedoms.where(fixed: false) + y_degree_of_freedoms.where(fixed: false)
-    subset_i = free_dofs.max_by {|dof| dof.matrix_row_i}.matrix_row_i
+    subset_i = free_dofs.max_by {|dof| dof.matrix_row}.matrix_row
 
-    sub_stiffness_matrix = stiffness_matrix.minor(0..subset_i, 0..subset_i) #TODO correct?
+    sub_stiffness_matrix = stiffness_matrix.minor(0..subset_i, 0..subset_i)
 
     applied_loads = []
-    subset_i.times do |i|
-      dof = x_degree_of_freedoms.find_by(matrix_row_i = i)
-      dof = y_degree_of_freedoms.find_by(marix_row_i = i) unless dof
+    (0..subset_i).each do |i|
+      dof = x_degree_of_freedoms.find_by(matrix_row: i)
+      dof = y_degree_of_freedoms.find_by(matrix_row: i) unless dof
 
       applied_loads << dof.node.total_load(dof.direction)
     end
 
     augmented_matrix = sub_stiffness_matrix.augment(applied_loads)
-    displacements  = augmented_matrix.gauss_jordan
+    displacements  = augmented_matrix.gauss_jordan 
   end
 end

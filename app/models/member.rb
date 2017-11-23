@@ -12,10 +12,10 @@ class Member < ApplicationRecord
   end
 
   def lambda_x
-    (far_node.x_coord - near_node.x_coord) / length
+    material.area * material.elastic_modulus / length * (far_node.x_coord - near_node.x_coord)
   end
 
   def lambda_y
-    (far_node.y_coord - near_node.y_coord) / length
+    material.area * material.elastic_modulus / length * (far_node.y_coord - near_node.y_coord)
   end
 end
