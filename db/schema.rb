@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171123222632) do
+ActiveRecord::Schema.define(version: 20171124212144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,10 +26,10 @@ ActiveRecord::Schema.define(version: 20171123222632) do
 
   create_table "materials", force: :cascade do |t|
     t.float "elastic_modulus", null: false
-    t.float "area", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "truss_id"
+    t.string "name", null: false
     t.index ["truss_id"], name: "index_materials_on_truss_id"
   end
 
@@ -40,9 +40,11 @@ ActiveRecord::Schema.define(version: 20171123222632) do
     t.datetime "updated_at", null: false
     t.integer "material_id"
     t.integer "truss_id"
+    t.integer "section_id"
     t.index ["far_node_id"], name: "index_members_on_far_node_id"
     t.index ["material_id"], name: "index_members_on_material_id"
     t.index ["near_node_id"], name: "index_members_on_near_node_id"
+    t.index ["section_id"], name: "index_members_on_section_id"
     t.index ["truss_id"], name: "index_members_on_truss_id"
   end
 
@@ -53,6 +55,15 @@ ActiveRecord::Schema.define(version: 20171123222632) do
     t.datetime "updated_at", null: false
     t.integer "truss_id"
     t.index ["truss_id"], name: "index_nodes_on_truss_id"
+  end
+
+  create_table "sections", force: :cascade do |t|
+    t.string "name", null: false
+    t.float "area", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "truss_id"
+    t.index ["truss_id"], name: "index_sections_on_truss_id"
   end
 
   create_table "trusses", force: :cascade do |t|

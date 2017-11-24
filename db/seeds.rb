@@ -9,35 +9,36 @@
 
 truss = Truss.create()
 
-n1 = Node.create(x_coord: 0, y_coord: 0, truss: truss)
-n2 = Node.create(x_coord: 10, y_coord: 0, truss: truss)
-n3 = Node.create(x_coord: 10, y_coord: 10, truss: truss)
-n4 = Node.create(x_coord: 0, y_coord: 10, truss: truss)
+n1 = Node.create!(x_coord: 0, y_coord: 0, truss: truss)
+n2 = Node.create!(x_coord: 10, y_coord: 0, truss: truss)
+n3 = Node.create!(x_coord: 10, y_coord: 10, truss: truss)
+n4 = Node.create!(x_coord: 0, y_coord: 10, truss: truss)
 
 n3.add_restraint!("x")
 n3.add_restraint!("y")
 n2.add_restraint!("x")
 
-material = Material.create(truss: truss, elastic_modulus: 1, area: 1)
+material = Material.create!(name: "dummy material", truss: truss, elastic_modulus: 100)
+section = Section.create!(name: "truss member", truss: truss, area: 1)
 
 Member.create!([
-  {truss: truss, near_node: n1, far_node: n2, material: material},
-  {truss: truss, near_node: n1, far_node: n3, material: material},
-  {truss: truss, near_node: n1, far_node: n4, material: material},
-  {truss: truss, near_node: n4, far_node: n3, material: material},
-  {truss: truss, near_node: n4, far_node: n2, material: material},
-  {truss: truss, near_node: n2, far_node: n3, material: material}
+  {truss: truss, near_node: n1, far_node: n2, material: material, section: section},
+  {truss: truss, near_node: n1, far_node: n3, material: material, section: section},
+  {truss: truss, near_node: n1, far_node: n4, material: material, section: section},
+  {truss: truss, near_node: n4, far_node: n3, material: material, section: section},
+  {truss: truss, near_node: n4, far_node: n2, material: material, section: section},
+  {truss: truss, near_node: n2, far_node: n3, material: material, section: section}
   ])
 
 # set the matrix rows for QA purposes
-n1.x_degree_of_freedom.update!(matrix_row: 0)
-n1.y_degree_of_freedom.update!(matrix_row: 1)
-n4.x_degree_of_freedom.update!(matrix_row: 2)
-n4.y_degree_of_freedom.update!(matrix_row: 3)
-n2.x_degree_of_freedom.update!(matrix_row: 5)
-n2.y_degree_of_freedom.update!(matrix_row: 4)
-n3.x_degree_of_freedom.update!(matrix_row: 6)
-n3.y_degree_of_freedom.update!(matrix_row: 7)
+# n1.x_degree_of_freedom.update!(matrix_row: 0)
+# n1.y_degree_of_freedom.update!(matrix_row: 1)
+# n4.x_degree_of_freedom.update!(matrix_row: 2)
+# n4.y_degree_of_freedom.update!(matrix_row: 3)
+# n2.x_degree_of_freedom.update!(matrix_row: 5)
+# n2.y_degree_of_freedom.update!(matrix_row: 4)
+# n3.x_degree_of_freedom.update!(matrix_row: 6)
+# n3.y_degree_of_freedom.update!(matrix_row: 7)
 
 Load.create!([
   {node: n4, direction: "y", magnitude: -4},

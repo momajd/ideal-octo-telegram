@@ -4,6 +4,7 @@ class Member < ApplicationRecord
   belongs_to :near_node, class_name: "Node", foreign_key: :near_node_id
   belongs_to :far_node, class_name: "Node", foreign_key: :far_node_id
   belongs_to :material
+  belongs_to :section
   belongs_to :truss
 
   def length
@@ -20,7 +21,7 @@ class Member < ApplicationRecord
   end
 
   def internal_force
-    material.area * material.elastic_modulus / length * (
+    section.area * material.elastic_modulus / length * (
       -lambda_x * near_node.x_degree_of_freedom.displacement +
       -lambda_y * near_node.y_degree_of_freedom.displacement +
       lambda_x * far_node.x_degree_of_freedom.displacement +

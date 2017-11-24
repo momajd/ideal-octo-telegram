@@ -1,9 +1,8 @@
-# require_relative '../../lib/extend_matrix.rb'
-
 class Truss < ApplicationRecord
   has_many :members, dependent: :destroy
   has_many :nodes, dependent: :destroy
   has_many :materials, dependent: :destroy
+  has_many :sections, dependent: :destroy
   has_many :x_degree_of_freedoms, through: :nodes
   has_many :y_degree_of_freedoms, through: :nodes
   has_many :loads, through: :nodes
@@ -24,7 +23,7 @@ class Truss < ApplicationRecord
 
     self.members.each do |member|
       length, lambda_x, lambda_y = member.length, member.lambda_x, member.lambda_y
-      area, elastic_mod = member.material.area, member.material.elastic_modulus
+      area, elastic_mod = member.section.area, member.material.elastic_modulus
 
       i1 = member.near_node.x_degree_of_freedom.matrix_row
       i2 = member.near_node.y_degree_of_freedom.matrix_row
