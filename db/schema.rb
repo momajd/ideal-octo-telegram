@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171123200353) do
+ActiveRecord::Schema.define(version: 20171123222632) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 20171123200353) do
 
   create_table "x_degree_of_freedoms", force: :cascade do |t|
     t.boolean "fixed", default: false
-    t.float "displacement"
+    t.float "displacement", default: 0.0
     t.float "reaction"
     t.integer "node_id"
     t.datetime "created_at", null: false
@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 20171123200353) do
 
   create_table "y_degree_of_freedoms", force: :cascade do |t|
     t.boolean "fixed", default: false
-    t.float "displacement"
+    t.float "displacement", default: 0.0
     t.float "reaction"
     t.integer "node_id"
     t.datetime "created_at", null: false
