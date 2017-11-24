@@ -10,15 +10,15 @@
 truss = Truss.create()
 
 n1 = Node.create(x_coord: 0, y_coord: 0, truss: truss)
-n2 = Node.create(x_coord: 120, y_coord: 0, truss: truss)
-n3 = Node.create(x_coord: 120, y_coord: 120, truss: truss)
-n4 = Node.create(x_coord: 0, y_coord: 120, truss: truss)
+n2 = Node.create(x_coord: 10, y_coord: 0, truss: truss)
+n3 = Node.create(x_coord: 10, y_coord: 10, truss: truss)
+n4 = Node.create(x_coord: 0, y_coord: 10, truss: truss)
 
 n3.add_restraint!("x")
 n3.add_restraint!("y")
 n2.add_restraint!("x")
 
-material = Material.create(truss: truss, elastic_modulus: 29000, area: 1)
+material = Material.create(truss: truss, elastic_modulus: 1, area: 1)
 
 Member.create!([
   {truss: truss, near_node: n1, far_node: n2, material: material},

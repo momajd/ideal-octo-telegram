@@ -12,10 +12,19 @@ class Member < ApplicationRecord
   end
 
   def lambda_x
-    material.area * material.elastic_modulus / length * (far_node.x_coord - near_node.x_coord)
+    (far_node.x_coord - near_node.x_coord) / length
   end
 
   def lambda_y
-    material.area * material.elastic_modulus / length * (far_node.y_coord - near_node.y_coord)
+    (far_node.y_coord - near_node.y_coord) / length
+  end
+
+  def internal_force
+    material.area * material.elastic_modulus / length * (
+      -lambda_x * near_node.x_degree_of_freedom.displacement +
+      -lambda_y * near_node.y_degree_of_freedom.displacement +
+      lambda_x * far_node.x_degree_of_freedom.displacement +
+      lambda_y * far_node.y_degree_of_freedom.displacement
+    )
   end
 end
