@@ -72,14 +72,15 @@ class Truss < ApplicationRecord
     augmented_matrix = sub_stiffness_matrix.augment(applied_loads)
     displacements  = augmented_matrix.gauss_jordan
 
-    #store displacements on the degree_of_freedoms
     displacements.each_with_index {|delta, i| dofs[i].update!(displacement: delta)}
   end
 
   def solve_reactions!
-    displacements = degree_of_freedoms.sort_by {|dof| dof.matrix_row}.map {|dof| dof.displacement}
+    dofs = degree_of_freedoms.sort_by {|dof| dof.matrix_row}
+    displacements = dofs.map {|dof| dof.displacement}
     displacements = Matrix.columns([displacements])
     forces = stiffness_matrix * displacements
-    # TODO reactions forces in db
+
+    forces.each_with_index {|val, i| dofs[i].update!(reaction: val.round(4)) if dofs[i].fixed?}
   end
 end
