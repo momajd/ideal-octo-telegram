@@ -73,7 +73,6 @@ class Truss < ApplicationRecord
   end
 
   def solve_reactions!
-    # TODO need to reload this from db instead of using cache
     dofs = degree_of_freedoms.sort_by {|dof| dof.matrix_row}
     displacements = dofs.map {|dof| dof.displacement}
     displacements = Matrix.columns([displacements])
