@@ -1,3 +1,4 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
+  # TODO for testing only. Need to uncomment
+  # protect_from_forgery with: :exception
 end

@@ -11,7 +11,13 @@ class Truss < ApplicationRecord
     x_degree_of_freedoms + y_degree_of_freedoms
   end
 
-  # private TODO
+  def solve
+    assign_stiff_matrix_rows!
+    solve_displacements!
+    solve_reactions!
+  end
+
+  private
   def assign_stiff_matrix_rows!
     dofs = degree_of_freedoms.sort_by {|dof| dof.free? ? 0 : 1} #order free dofs first
     dofs.each_with_index{|dof, i| dof.update!(matrix_row: i)}
