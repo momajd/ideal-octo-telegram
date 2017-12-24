@@ -4,7 +4,7 @@ class Api::NodesController < ApplicationController
     if @node.save
       render json: @node
     else
-      render @node.errors.full_messages, status: 422
+      render json: @node.errors.full_messages, status: 422
     end
   end
 
@@ -13,7 +13,7 @@ class Api::NodesController < ApplicationController
     if @node.update(node_params)
       render json: @node
     else
-      render @node.errors.full_messages, status: 422
+      render json: @node.errors.full_messages, status: 422
     end
   end
 
