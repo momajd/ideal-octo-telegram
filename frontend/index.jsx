@@ -1,16 +1,29 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ApiUtils from './utils/api_utils';
 
-class App extends React.Component {
+class Index extends React.Component {
+  constructor() {
+      super();
+      this.state = {trusses: []};
+  }
+
+  componentDidMount() {
+    ApiUtils.getAllTrusses((trusses) => {
+      this.setState({trusses: trusses});
+    });
+  }
+
   render() {
-    return(
+    let trusses = this.state.trusses.map(truss => {
+        return <li key={truss.id}>{truss.name}</li>;
+    });
+
+    return (
       <div>
-        React App
+        {trusses}
       </div>
     );
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(<App/>, document.getElementById('root'));
-});
+export default Index;
