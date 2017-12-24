@@ -4,7 +4,7 @@ class Api::LoadsController < ApplicationController
     if @load.save
       render json: @load
     else
-      render json: @load.errors.full_messages
+      render json: @load.errors.full_messages, status: 422
     end
   end
 
