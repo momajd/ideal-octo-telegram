@@ -10,7 +10,7 @@ const ApiUtils = {
     $.ajax({
       type: 'POST',
       url: 'api/trusses',
-      data: {name: name},
+      data: {truss: {name: name}},
       success: successCallback
     });
   }

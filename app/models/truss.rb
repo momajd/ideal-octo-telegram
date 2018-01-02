@@ -7,6 +7,8 @@ class Truss < ApplicationRecord
   has_many :y_degree_of_freedoms, through: :nodes
   has_many :loads, through: :nodes
 
+  validates :name, presence: true
+
   def degree_of_freedoms
     x_degree_of_freedoms + y_degree_of_freedoms
   end
