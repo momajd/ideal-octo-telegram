@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import ApiUtils from './utils/api_utils';
 
 class Index extends React.Component {
@@ -32,7 +33,11 @@ class Index extends React.Component {
 
   render() {
     let trusses = this.state.trusses.map(truss => {
-      return <li key={truss.id}>{truss.name}</li>;
+      return (
+          <li key={truss.id}>
+            <Link to={`/trusses/${truss.id}`}>{truss.name}</Link>
+          </li>
+      );
     });
 
     return (

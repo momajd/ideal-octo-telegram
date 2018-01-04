@@ -4,6 +4,7 @@ import {Route, HashRouter} from 'react-router-dom';
 
 // Components
 import Index from './index';
+import Truss from './truss';
 
 class App extends React.Component {
   render() {
@@ -18,7 +19,10 @@ class App extends React.Component {
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render((
       <HashRouter>
-        <Route path="/" component={App}/>
+        <div>
+          <Route exact path="/" component={App}/>
+          <Route path="/trusses/:id" component={Truss}/>
+        </div>
       </HashRouter>
     ), document.getElementById('root'));
 });

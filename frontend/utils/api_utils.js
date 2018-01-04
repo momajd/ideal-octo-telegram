@@ -6,6 +6,13 @@ const ApiUtils = {
     });
   },
 
+  getTruss: (id, successCallback) => {
+    $.ajax({
+      url: `api/trusses/${id}`,
+      success: successCallback
+    });
+  },
+
   createTruss: (name, successCallback) => {
     $.ajax({
       type: 'POST',

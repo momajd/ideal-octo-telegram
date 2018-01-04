@@ -3,6 +3,11 @@ class Api::TrussesController < ApplicationController
     render json: Truss.all
   end
 
+  def show
+    truss = Truss.find_by(id: params[:id])
+    render json: truss
+  end
+
   def create
     @truss = Truss.new(truss_params)
     if @truss.save
@@ -29,6 +34,6 @@ class Api::TrussesController < ApplicationController
 
   private
   def truss_params
-    params.require(:truss).permit(:name)
+    params.require(:truss).permit(:name, :id)
   end
 end
