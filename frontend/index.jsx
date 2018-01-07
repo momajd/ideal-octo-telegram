@@ -19,7 +19,9 @@ class Index extends React.Component {
     event.preventDefault();
 
     ApiUtils.createTruss(this.state.inputValue, truss=> {
-      this.setState({trusses: this.state.trusses.concat(truss)});
+      let trusses = this.state.trusses;
+      trusses.push(truss);
+      this.setState({trusses});
     });
 
     this.setState({inputValue: ''});
@@ -27,7 +29,7 @@ class Index extends React.Component {
 
   componentDidMount() {
     ApiUtils.getAllTrusses(trusses => {
-      this.setState({trusses: trusses});
+      this.setState({trusses});
     });
   }
 

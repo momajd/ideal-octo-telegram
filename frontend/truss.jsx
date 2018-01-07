@@ -1,5 +1,7 @@
 import React from 'react';
 import ApiUtils from './utils/api_utils';
+import InputTabs from './input_tabs';
+import {Tabs, Tab} from 'react-bootstrap';
 
 class Truss extends React.Component {
   constructor() {
@@ -14,7 +16,10 @@ class Truss extends React.Component {
 
   render() {
     return (
-      <div>{this.state.truss.name}</div>
+      <div>
+        <h3>{this.state.truss.name}</h3>
+        <InputTabs/>
+      </div>
     );
   }
 }
