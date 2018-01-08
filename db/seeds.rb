@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-truss = Truss.create()
+truss = Truss.create(name: "Test Truss")
 
 n1 = Node.create!(x_coord: 0, y_coord: 0, truss: truss)
 n2 = Node.create!(x_coord: 10, y_coord: 0, truss: truss)

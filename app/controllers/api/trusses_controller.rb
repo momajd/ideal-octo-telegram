@@ -5,7 +5,7 @@ class Api::TrussesController < ApplicationController
 
   def show
     truss = Truss.find_by(id: params[:id])
-    render json: truss
+    render json: {id: truss.id, name: truss.name, nodes: truss.nodes}
   end
 
   def create

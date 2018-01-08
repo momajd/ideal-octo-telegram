@@ -4,11 +4,11 @@ import ApiUtils from './utils/api_utils';
 
 class Index extends React.Component {
   constructor() {
-      super();
-      this.state = {trusses: [], inputValue: ''};
+    super();
+    this.state = {trusses: [], inputValue: ''};
 
-      this.handleInputChange = this.handleInputChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleInputChange(event) {

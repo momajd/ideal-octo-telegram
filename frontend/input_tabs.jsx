@@ -1,4 +1,5 @@
 import React from 'react';
+import NodeIndex from './node_index';
 import {Tabs, Tab} from 'react-bootstrap';
 
 class InputTabs extends React.Component {
@@ -7,10 +8,14 @@ class InputTabs extends React.Component {
   }
 
   render() {
+    let nodes = this.props.truss.nodes.map(node => {
+      return (<li key={node.id}>{node.x_coord}</li>);
+    });
+
     return (
-      <Tabs defaultActiveKey={1}>
+      <Tabs defaultActiveKey={1} id="input-tabs">
       	<Tab eventKey={1} title="Nodes">
-      		Tab 1 content
+          <NodeIndex nodes={this.props.truss.nodes}/>
       	</Tab>
       	<Tab eventKey={2} title="Members">
       		Tab 2 content
