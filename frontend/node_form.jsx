@@ -1,21 +1,25 @@
 import React from 'react';
 import {FormGroup, ControlLabel, FormControl, Button} from 'react-bootstrap';
 
+
 class NodeForm extends React.Component {
   constructor() {
     super();
-    this.state = {xinput: '', yinput: ''};
-
-    this.handleCoordChangeX = this.handleCoordChangeX.bind(this);
-    this.handleCoordChangeY = this.handleCoordChangeY.bind(this);
+    this.state = {xInput: '', yInput: ''};
   }
 
   handleCoordChangeX (event) {
-    this.setState({xinput: event.target.value});
+    this.setState({xInput: event.target.value});
   }
 
   handleCoordChangeY (event) {
-    this.setState({yinput: event.target.value});
+    this.setState({yInput: event.target.value});
+  }
+
+  handleSubmit (event) {
+    event.preventDefault();
+    this.props.createNode(this.state.xInput, this.state.yInput);
+    this.props.closeModal();
   }
 
   render() {
@@ -24,8 +28,8 @@ class NodeForm extends React.Component {
         <FormGroup>
           <ControlLabel>X Coordinate:</ControlLabel>
           <FormControl
-            value={this.state.xinput}
-            onChange={this.handleCoordChangeX}
+            value={this.state.xInput}
+            onChange={this.handleCoordChangeX.bind(this)}
             placeholder="0"
             />
         </FormGroup>
@@ -33,13 +37,13 @@ class NodeForm extends React.Component {
         <FormGroup>
           <ControlLabel>Y Coordinate:</ControlLabel>
           <FormControl
-            value={this.state.yinput}
-            onChange={this.handleCoordChangeY}
+            value={this.state.yInput}
+            onChange={this.handleCoordChangeY.bind(this)}
             placeholder="0"
             />
         </FormGroup>
 
-        <Button type="submit">Submit</Button>
+        <Button type="submit" onClick={this.handleSubmit.bind(this)}>Submit</Button>
       </form>
     );
   }

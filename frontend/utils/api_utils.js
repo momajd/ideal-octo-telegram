@@ -20,6 +20,15 @@ const ApiUtils = {
       data: {truss: {name: name}},
       success: successCallback
     });
+  },
+
+  createNode: (xCoord, yCoord, trussId, successCallback) => {
+    $.ajax({
+      type: "POST",
+      url: `api/trusses/${trussId}/nodes`,
+      data: {node: {x_coord: xCoord, y_coord: yCoord, truss_id: trussId}},
+      success: successCallback
+    });
   }
 };
 

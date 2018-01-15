@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import ApiUtils from './utils/api_utils';
 
-class Index extends React.Component {
+class TrussIndex extends React.Component {
   constructor() {
     super();
     this.state = {trusses: [], inputValue: ''};
@@ -52,4 +52,4 @@ class Index extends React.Component {
   }
 }
 
-export default Index;
+export default TrussIndex;

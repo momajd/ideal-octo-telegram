@@ -4,14 +4,14 @@ class Api::TrussesController < ApplicationController
   end
 
   def show
-    truss = Truss.find_by(id: params[:id])
-    render json: {id: truss.id, name: truss.name, nodes: truss.nodes}
+    @truss = Truss.find_by(id: params[:id])
+    render :show
   end
 
   def create
     @truss = Truss.new(truss_params)
     if @truss.save
-      render json: @truss
+      render :show
     else
       render json: @truss.errors.full_messages, status: 422
     end

@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom';
 import {Route, HashRouter} from 'react-router-dom';
 
 // Components
-import Index from './index';
+import TrussIndex from './truss_index';
 import Truss from './truss';
 
 class App extends React.Component {
   render() {
     return(
       <div>
-        <Index/>
+        <TrussIndex/>
       </div>
     );
   }

@@ -1,4 +1,5 @@
 import React from 'react';
+import ApiUtils from './utils/api_utils';
 import {Table, Button, Modal} from 'react-bootstrap';
 import NodeForm from './node_form';
 
@@ -17,7 +18,7 @@ class NodeIndex extends React.Component {
   }
 
   render() {
-    let {nodes} = this.props;
+    let {nodes} = this.props.truss;
     let nodeNumber = 1;
     let nodeRows = nodes.map(node => {
       return(
@@ -40,7 +41,10 @@ class NodeIndex extends React.Component {
             <Modal.Title>Create New Node</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <NodeForm/>
+            <NodeForm
+              createNode={this.props.createNode}
+              closeModal={this.handleNodeFormClose.bind(this)}
+              />
           </Modal.Body>
         </Modal>
 

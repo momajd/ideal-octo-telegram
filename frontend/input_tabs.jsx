@@ -15,7 +15,7 @@ class InputTabs extends React.Component {
     return (
       <Tabs defaultActiveKey={1} id="input-tabs">
       	<Tab eventKey={1} title="Nodes">
-          <NodeIndex nodes={this.props.truss.nodes}/>
+          <NodeIndex truss={this.props.truss} createNode={this.props.createNode}/>
       	</Tab>
       	<Tab eventKey={2} title="Members">
       		Tab 2 content
