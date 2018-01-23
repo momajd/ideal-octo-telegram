@@ -2,7 +2,7 @@ import React from 'react';
 import ApiUtils from './utils/api_utils';
 import InputTabs from './input_tabs';
 import {Tabs, Tab} from 'react-bootstrap';
-import View from './utils/three_js_view';
+import View from './three/view';
 
 class Truss extends React.Component {
   constructor() {
@@ -15,6 +15,7 @@ class Truss extends React.Component {
     ApiUtils.getTruss(trussId, (truss) => {
       this.setState({truss});
       this.view = new View(truss);
+      window.view = this.view; //TODO Remove global variable;
     });
   }
 
@@ -29,10 +30,10 @@ class Truss extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="truss-container">
         <h3>{this.state.truss.name}</h3>
+        <div id="three-js-container"></div>
         <InputTabs truss={this.state.truss} createNode={this.createNode.bind(this)}/>
-        <div id="scene3d"></div>
       </div>
     );
   }
