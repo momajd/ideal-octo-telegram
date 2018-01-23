@@ -2,11 +2,21 @@ import * as THREE from 'three';
 
 class View {
   constructor(truss) {
-    this.renderer = new THREE.WebGLRenderer();
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(this.renderer.domElement);
+    this.createScene();
 
-    this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 500);
+    this.truss = truss;
+    this.viewNodes = {};
+
+    this.truss.nodes.forEach(node => this.addNode(node));
+  }
+
+  createScene () {
+    let scene3d = document.getElementById('scene3d');
+    this.renderer = new THREE.WebGLRenderer();
+    this.renderer.setSize(scene3d.offsetWidth, scene3d.offsetHeight);
+    scene3d.appendChild(this.renderer.domElement);
+
+    this.camera = new THREE.PerspectiveCamera(45, scene3d.offsetWidth / scene3d.offsetHeight, 0.1, 500);
     this.camera.position.set(0, 0, 100);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
@@ -14,19 +24,21 @@ class View {
     this.scene.background = new THREE.Color( 0xcccccc );
 
     this.render();
-
-    this.truss = truss;
-    this.truss.nodes.forEach(node => this.addNode(node));
   }
 
   addNode (nodeData) {
-    let node = new Node(nodeData, this);
-    node.addToScene();
+    let viewNode = new ViewNode(nodeData, this);
+    this.viewNodes[nodeData.id] = viewNode;
+    viewNode.addToScene();
     this.render();
   }
 
   removeNode(id) {
-
+    // TODO Test
+    let node = this.nodes[id];
+    delete this.nodes[id];
+    node.removeFromScene();
+    this.render();
   }
 
   addMember() {
@@ -46,7 +58,7 @@ class Member {
   }
 }
 
-class Node {
+class ViewNode {
   constructor(nodeData, view) {
     this.vector = new THREE.Vector3(nodeData.x_coord, nodeData.y_coord, 0);
     this.view = view;

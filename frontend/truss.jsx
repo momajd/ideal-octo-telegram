@@ -32,6 +32,7 @@ class Truss extends React.Component {
       <div>
         <h3>{this.state.truss.name}</h3>
         <InputTabs truss={this.state.truss} createNode={this.createNode.bind(this)}/>
+        <div id="scene3d"></div>
       </div>
     );
   }
