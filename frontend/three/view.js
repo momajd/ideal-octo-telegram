@@ -1,5 +1,5 @@
-import * as THREE from 'three';
 import ViewNode from './view_node';
+/* global THREE */
 
 class View {
   constructor(truss) {
@@ -23,6 +23,25 @@ class View {
 
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color( 0xcccccc );
+
+    this.controls = new THREE.TrackballControls( this.camera, threeJsContainer );
+		this.controls.rotateSpeed = 1.0;
+		this.controls.zoomSpeed = 1.2;
+		this.controls.panSpeed = 0.8;
+		this.controls.noZoom = false;
+		this.controls.noPan = false;
+		this.controls.staticMoving = true;
+		this.controls.dynamicDampingFactor = 0.3;
+		this.controls.addEventListener( 'change', this.render.bind(this) );
+
+    let render = this.render.bind(this);
+    let controls = this.controls;
+    function animate() {
+    	requestAnimationFrame( animate );
+			render();
+			controls.update();
+    }
+    animate();
 
     this.render();
   }

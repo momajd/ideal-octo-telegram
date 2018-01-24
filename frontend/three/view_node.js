@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+/* global THREE */
 
 class ViewNode {
   constructor(nodeData, view) {
