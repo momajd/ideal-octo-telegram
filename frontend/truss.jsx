@@ -1,13 +1,13 @@
 import React from 'react';
 import ApiUtils from './utils/api_utils';
 import InputTabs from './input_tabs';
-import {Tabs, Tab} from 'react-bootstrap';
+import {Tabs, Tab, Panel} from 'react-bootstrap';
 import View from './three/view';
 
 class Truss extends React.Component {
   constructor() {
     super();
-    this.state = {truss: {nodes: []}}; //use empty objects for initial render
+    this.state = {truss: {nodes: [], materials: [], sections: []}}; // for initial render
   }
 
   componentDidMount() {
@@ -28,12 +28,29 @@ class Truss extends React.Component {
     });
   }
 
+  createMember() {
+
+  }
+
+  createSection() {
+
+  }
+
+  createMaterial() {
+
+  }
+
   render() {
     return (
       <div className="truss-container">
         <h3>{this.state.truss.name}</h3>
         <div id="three-js-container"></div>
-        <InputTabs truss={this.state.truss} createNode={this.createNode.bind(this)}/>
+        <InputTabs truss={this.state.truss}
+          createNode={this.createNode.bind(this)}
+          createMember={this.createMember.bind(this)}
+          createSection={this.createSection.bind(this)}
+          createMaterial={this.createMaterial.bind(this)}
+          />
       </div>
     );
   }

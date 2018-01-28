@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180128151534) do
+ActiveRecord::Schema.define(version: 20180128201300) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20180128151534) do
     t.integer "material_id"
     t.integer "truss_id"
     t.integer "section_id"
+    t.string "name"
     t.index ["far_node_id"], name: "index_members_on_far_node_id"
     t.index ["material_id"], name: "index_members_on_material_id"
     t.index ["near_node_id"], name: "index_members_on_near_node_id"

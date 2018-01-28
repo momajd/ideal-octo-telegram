@@ -6,6 +6,10 @@ import {Route, HashRouter} from 'react-router-dom';
 import TrussIndex from './truss_index';
 import Truss from './truss';
 
+// TODO remove from window
+import ApiUtils from './utils/api_utils';
+window.apiUtils = ApiUtils;
+
 class App extends React.Component {
   render() {
     return(

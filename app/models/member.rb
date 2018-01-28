@@ -7,6 +7,8 @@ class Member < ApplicationRecord
   belongs_to :section
   belongs_to :truss
 
+  validates :near_node_id, :far_node_id, :name, :truss_id, presence: true
+
   def length
     n, f = near_node, far_node
     Math.sqrt((f.x_coord - n.x_coord)**2 + (f.y_coord - n.y_coord)**2)

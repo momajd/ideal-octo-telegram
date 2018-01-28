@@ -26,6 +26,6 @@ class Api::MembersController < ApplicationController
   private
   def member_params
     params.require(:member).permit(:near_node_id, :far_node_id, :truss_id,
-      :section_id, :material_id)
+      :section_id, :material_id, :name)
   end
 end

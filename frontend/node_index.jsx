@@ -1,6 +1,5 @@
 import React from 'react';
 import {Table, Button, Modal} from 'react-bootstrap';
-import Draggable from 'react-draggable';
 import ApiUtils from './utils/api_utils';
 import NodeForm from './node_form';
 

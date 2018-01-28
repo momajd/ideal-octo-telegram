@@ -4,7 +4,7 @@ class Api::TrussesController < ApplicationController
   end
 
   def show
-    @truss = Truss.find_by(id: params[:id])
+    @truss = Truss.includes(:nodes, :sections, :materials, members: [:near_node, :far_node]).find_by(id: params[:id])
     render :show
   end
 
