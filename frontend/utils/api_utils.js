@@ -22,11 +22,12 @@ const ApiUtils = {
     });
   },
 
-  createNode: (xCoord, yCoord, trussId, successCallback) => {
+  createNode: (nodeName, xCoord, yCoord, zCoord, trussId, successCallback) => {
     $.ajax({
       type: "POST",
       url: `api/trusses/${trussId}/nodes`,
-      data: {node: {x_coord: xCoord, y_coord: yCoord, truss_id: trussId}},
+      data: {node: {name: nodeName, x_coord: xCoord, y_coord: yCoord, z_coord: zCoord,
+        truss_id: trussId}},
       success: successCallback
     });
   }

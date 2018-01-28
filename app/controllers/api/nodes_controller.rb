@@ -25,6 +25,6 @@ class Api::NodesController < ApplicationController
 
   private
   def node_params
-    params.require(:node).permit(:x_coord, :y_coord, :truss_id)
+    params.require(:node).permit(:name, :x_coord, :y_coord, :z_coord, :truss_id)
   end
 end

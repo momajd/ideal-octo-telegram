@@ -9,6 +9,7 @@
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.0",
     "react-dom": "^16.2.0",
+    "react-draggable": "^3.0.5",
     "react-router-dom": "^4.2.2",
     "three": "^0.89.0",
     "webpack": "^3.10.0"

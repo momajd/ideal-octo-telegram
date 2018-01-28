@@ -5,7 +5,11 @@ import {FormGroup, ControlLabel, FormControl, Button} from 'react-bootstrap';
 class NodeForm extends React.Component {
   constructor() {
     super();
-    this.state = {xInput: '', yInput: ''};
+    this.state = {nodeName: '', xInput: '', yInput: '', zInput: ''};
+  }
+
+  handleNodeNameChange (event) {
+    this.setState({nodeName: event.target.value});
   }
 
   handleCoordChangeX (event) {
@@ -16,15 +20,28 @@ class NodeForm extends React.Component {
     this.setState({yInput: event.target.value});
   }
 
+  handleCoordChangeZ (event) {
+    this.setState({zInput: event.target.value});
+  }
+
   handleSubmit (event) {
     event.preventDefault();
-    this.props.createNode(this.state.xInput, this.state.yInput);
+    this.props.createNode(this.state.nodeName, this.state.xInput, this.state.yInput, this.state.zInput);
     this.props.closeModal();
   }
 
   render() {
     return(
       <form>
+        <FormGroup>
+          <ControlLabel>Node Name:</ControlLabel>
+          <FormControl
+            value={this.state.nodeName}
+            onChange={this.handleNodeNameChange.bind(this)}
+            placeholder="0"
+            />
+        </FormGroup>
+
         <FormGroup>
           <ControlLabel>X Coordinate:</ControlLabel>
           <FormControl
@@ -39,6 +56,15 @@ class NodeForm extends React.Component {
           <FormControl
             value={this.state.yInput}
             onChange={this.handleCoordChangeY.bind(this)}
+            placeholder="0"
+            />
+        </FormGroup>
+
+        <FormGroup>
+          <ControlLabel>Z Coordinate:</ControlLabel>
+          <FormControl
+            value={this.state.zInput}
+            onChange={this.handleCoordChangeZ.bind(this)}
             placeholder="0"
             />
         </FormGroup>

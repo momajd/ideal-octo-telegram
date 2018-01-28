@@ -19,8 +19,8 @@ class Truss extends React.Component {
     });
   }
 
-  createNode(xCoord, yCoord) {
-    ApiUtils.createNode(xCoord, yCoord, this.state.truss.id, (node) => {
+  createNode(nodeName, xCoord, yCoord, zCoord) {
+    ApiUtils.createNode(nodeName, xCoord, yCoord, zCoord, this.state.truss.id, (node) => {
       this.state.truss.nodes.push(node);
       let truss = this.state.truss;
       this.setState({truss});

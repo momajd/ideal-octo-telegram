@@ -4,8 +4,9 @@ class Node < ApplicationRecord
   has_many :loads, dependent: :destroy
   belongs_to :truss
 
-  validates :x_coord, :y_coord, presence: true
-  after_initialize :load_dofs
+  validates :x_coord, :y_coord, :z_coord, :name, presence: true
+  # TODO load_dofs method results in n+1 query. Revise:
+  # after_initialize :load_dofs
 
   def members
     # use this method instead of the 'has_many' macro
