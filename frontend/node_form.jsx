@@ -69,7 +69,9 @@ class NodeForm extends React.Component {
             />
         </FormGroup>
 
-        <Button type="submit" onClick={this.handleSubmit.bind(this)}>Submit</Button>
+        <Button bsStyle="primary" block type="submit" onClick={this.handleSubmit.bind(this)}>
+          Submit
+        </Button>
       </form>
     );
   }

@@ -36,8 +36,12 @@ class Truss extends React.Component {
 
   }
 
-  createMaterial() {
-
+  createMaterial(materialName, elasticModulus) {
+    ApiUtils.createMaterial(materialName, elasticModulus, this.state.truss.id, (material) => {
+      this.state.truss.materials.push(material);
+      let truss = this.state.truss;
+      this.setState({truss});
+    });
   }
 
   render() {

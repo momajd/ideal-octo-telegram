@@ -1,6 +1,7 @@
 import React from 'react';
 import {Table, Button, Modal} from 'react-bootstrap';
 import ApiUtils from './utils/api_utils';
+import MaterialForm from './material_form';
 
 class MaterialIndex extends React.Component {
   constructor(props) {
@@ -9,11 +10,11 @@ class MaterialIndex extends React.Component {
   }
 
   handleNewMaterialFormShow() {
-
+    this.setState({showNewMaterialForm: true});
   }
 
   handleNewMaterialFormClose() {
-
+    this.setState({showNewMaterialForm: false});
   }
 
   render() {
@@ -22,7 +23,7 @@ class MaterialIndex extends React.Component {
     let materialRows = materials.map(material => {
       return(
         <tr key={material.id}>
-          <td><a>{materialNumber++}</a></td>
+          <td>{materialNumber++}</td>
           <td>{material.name}</td>
           <td>{material.elastic_modulus}</td>
         </tr>
@@ -36,13 +37,14 @@ class MaterialIndex extends React.Component {
         </Button>
 
         <Modal bsSize="small" show={this.state.showNewMaterialForm}
-          onHide={this.handleNewMaterialFormShow.bind(this)}>
+          onHide={this.handleNewMaterialFormClose.bind(this)}>
 
           <Modal.Header closeButton>
             <Modal.Title>Create New Material</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-
+            <MaterialForm createMaterial={this.props.createMaterial}
+              closeModal={this.handleNewMaterialFormClose.bind(this)}/>
           </Modal.Body>
         </Modal>
 
