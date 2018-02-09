@@ -4,7 +4,7 @@ class Node < ApplicationRecord
   has_many :loads, dependent: :destroy
   belongs_to :truss
 
-  validates :x_coord, :y_coord, :z_coord, :name, presence: true
+  validates :x_coord, :y_coord, :z_coord, presence: true
   # TODO load_dofs method results in n+1 query. Revise:
   # after_initialize :load_dofs
 

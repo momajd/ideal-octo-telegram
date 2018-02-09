@@ -68,14 +68,12 @@ class View {
     let viewNode = new ViewNode(nodeData, this);
     this.viewNodes[nodeData.id] = viewNode;
     viewNode.addToScene();
-    this.render();
   }
 
-  removeNode(id) {
-    let node = this.viewNodes[id];
-    delete this.viewNodes[id];
+  removeNode(nodeData) {
+    let node = this.viewNodes[nodeData.id];
+    delete this.viewNodes[nodeData.id];
     node.removeFromScene();
-    this.render();
   }
 
   addMember() {

@@ -22,12 +22,21 @@ const ApiUtils = {
     });
   },
 
-  createNode: (nodeName, xCoord, yCoord, zCoord, trussId, successCallback) => {
+  createNode: (nodeName, xCoord, yCoord, zCoord, trussId, successCallback, errorCallback) => {
     $.ajax({
       type: "POST",
       url: `api/trusses/${trussId}/nodes`,
       data: {node: {name: nodeName, x_coord: xCoord, y_coord: yCoord, z_coord: zCoord,
         truss_id: trussId}},
+      success: successCallback,
+      error: errorCallback
+    });
+  },
+
+  deleteNode: (trussId, nodeId, successCallback) => {
+    $.ajax({
+      type: "DELETE",
+      url: `api/trusses/${trussId}/nodes/${nodeId}`,
       success: successCallback
     });
   },

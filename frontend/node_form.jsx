@@ -27,7 +27,6 @@ class NodeForm extends React.Component {
   handleSubmit (event) {
     event.preventDefault();
     this.props.createNode(this.state.nodeName, this.state.xInput, this.state.yInput, this.state.zInput);
-    this.props.closeModal();
   }
 
   render() {
@@ -38,7 +37,7 @@ class NodeForm extends React.Component {
           <FormControl
             value={this.state.nodeName}
             onChange={this.handleNodeNameChange.bind(this)}
-            placeholder="0"
+            placeholder="ex: N1"
             />
         </FormGroup>
 
