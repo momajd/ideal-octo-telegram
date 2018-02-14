@@ -9,8 +9,9 @@ class Truss extends React.Component {
     super();
     this.state = {
       truss: {nodes: [], materials: [], sections: []},
-      nodeAlerts: []
-    }; // for initial render
+      errors: [],
+      alerts: []
+    };
   }
 
   componentDidMount() {
@@ -26,13 +27,12 @@ class Truss extends React.Component {
     let successCallback = (node) => {
       this.state.truss.nodes.push(node);
       let truss = this.state.truss;
-      this.setState({truss});
+      this.setState({truss, errors: [], alerts: [`Node ${node.name} successfully created`] });
       this.view.addNode(node);
     };
 
     let errorCallback = (errors) => {
-      this.setState({nodeAlerts: errors.responseJSON});
-      setTimeout(() => {this.setState({nodeAlerts: []}); }, 5000);
+      this.setState({errors: errors.responseJSON, alerts: []});
     };
 
     ApiUtils.createNode(nodeName, xCoord, yCoord, zCoord, this.state.truss.id, successCallback,
@@ -40,16 +40,18 @@ class Truss extends React.Component {
   }
 
   deleteNode(nodeId) {
-    ApiUtils.deleteNode(this.state.truss.id, nodeId, (node) => {
-      let truss = this.state.truss;
-      for (var i = 0; i < truss.nodes.length; i++) {
-        if (node.id === truss.nodes[i].id) { break;}
-      }
+    if (confirm("Are you sure you want to delete this node?")) {
+      ApiUtils.deleteNode(this.state.truss.id, nodeId, (node) => {
+        let truss = this.state.truss;
+        for (var i = 0; i < truss.nodes.length; i++) {
+          if (node.id === truss.nodes[i].id) { break;}
+        }
 
-      truss.nodes.splice(i, 1);
-      this.setState({truss});
-      this.view.removeNode(node);
-    });
+        truss.nodes.splice(i, 1);
+        this.setState({truss});
+        this.view.removeNode(node);
+      });
+    }
   }
 
   createMember() {
@@ -75,7 +77,8 @@ class Truss extends React.Component {
         <div id="three-js-container"></div>
         <InputTabs truss={this.state.truss}
           createNode={this.createNode.bind(this)}
-          nodeAlerts={this.state.nodeAlerts}
+          errors={this.state.errors}
+          alerts={this.state.alerts}
           deleteNode={this.deleteNode.bind(this)}
           createMember={this.createMember.bind(this)}
           createSection={this.createSection.bind(this)}

@@ -26,7 +26,9 @@ class NodeForm extends React.Component {
 
   handleSubmit (event) {
     event.preventDefault();
-    this.props.createNode(this.state.nodeName, this.state.xInput, this.state.yInput, this.state.zInput);
+    this.props.createNode(this.state.nodeName, this.state.xInput, this.state.yInput,
+      this.state.zInput);
+    this.setState({nodeName: '', xInput: '', yInput: '', zInput: ''});
   }
 
   render() {

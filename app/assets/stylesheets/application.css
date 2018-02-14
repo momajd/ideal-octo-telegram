@@ -17,3 +17,7 @@
 .table th, .table td {
   text-align: center;
 }
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}

@@ -7,7 +7,7 @@ import NodeForm from './node_form';
 class NodeIndex extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {showNewNodeForm: false, showEditNodeForm: false};
+    this.state = {showNewNodeForm: false, showEditNodeForm: false, showAlerts: false};
   }
 
   handleDeleteNode(eventKey) {
@@ -19,15 +19,25 @@ class NodeIndex extends React.Component {
   }
 
   handleNewNodeFormClose() {
-    this.setState({showNewNodeForm: false});
+    this.setState({showNewNodeForm: false, showAlerts: false});
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors.length > 0 || nextProps.alerts.length > 0) {
+      this.setState({showAlerts: true});
+    }
   }
 
   handleEditNodeFormShow(e) {
-    this.setState({showEditNodeForm: true});
+    // TODO
   }
 
   handleEditNodeFormClose() {
-    this.setState({showEditNodeForm: false});
+    // TODO
+  }
+
+  handleDismissAlert() {
+    this.setState({showAlerts: false});
   }
 
   render() {
@@ -54,18 +64,30 @@ class NodeIndex extends React.Component {
       );
     });
 
-    let nodeAlerts = this.props.nodeAlerts.map( (message, index) => {
+    let errors = this.props.errors.map( (message, index) => {
       return(<li key={index}>{message}</li>);
     });
 
-    let alert;
-    if (nodeAlerts.length > 0) {
-      alert = (
-        <Alert bsStyle="danger">
+    let errorAlert;
+    if (this.state.showAlerts && errors.length > 0) {
+      errorAlert = (
+        <Alert bsStyle="danger" onDismiss={this.handleDismissAlert.bind(this)}>
           <h4>Errors :(</h4>
-          {nodeAlerts}
+          {errors}
         </Alert>
       );
+    }
+
+    let alerts = this.props.alerts.map( (message, index) => {
+      return(<li key={index}>{message}</li>);
+    });
+
+    let successAlert;
+    if (this.state.showAlerts && alerts.length > 0) {
+      successAlert = (
+        <Alert bsStyle="success" onDismiss={this.handleDismissAlert.bind(this)}>
+          {alerts}
+        </Alert>);
     }
 
     return (
@@ -107,7 +129,8 @@ class NodeIndex extends React.Component {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {alert}
+            {errorAlert}
+            {successAlert}
             <NodeForm
               createNode={this.props.createNode}
               closeModal={this.handleNewNodeFormClose.bind(this)}

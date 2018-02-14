@@ -16,7 +16,8 @@ class InputTabs extends React.Component {
           <NodeIndex truss={this.props.truss}
             createNode={this.props.createNode}
             deleteNode={this.props.deleteNode}
-            nodeAlerts={this.props.nodeAlerts}
+            errors={this.props.errors}
+            alerts={this.props.alerts}
             />
       	</Tab>
         <Tab eventKey={2} title="Materials">
