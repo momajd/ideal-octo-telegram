@@ -21,7 +21,11 @@ class InputTabs extends React.Component {
             />
       	</Tab>
         <Tab eventKey={2} title="Materials">
-          <MaterialIndex truss={this.props.truss} createMaterial={this.props.createMaterial}/>
+          <MaterialIndex truss={this.props.truss}
+            createMaterial={this.props.createMaterial}
+            errors={this.props.errors}
+            alerts={this.props.alerts}
+            />
         </Tab>
         <Tab eventKey={3} title="Sections">
           Tab 3 content

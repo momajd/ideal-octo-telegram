@@ -8,7 +8,7 @@ class Truss extends React.Component {
   constructor() {
     super();
     this.state = {
-      truss: {nodes: [], materials: [], sections: []},
+      truss: {nodes: [], materials: [], sections: []}, //for initial render
       errors: [],
       alerts: []
     };
@@ -63,11 +63,18 @@ class Truss extends React.Component {
   }
 
   createMaterial(materialName, elasticModulus) {
-    ApiUtils.createMaterial(materialName, elasticModulus, this.state.truss.id, (material) => {
+    let successCallback = (material) => {
       this.state.truss.materials.push(material);
       let truss = this.state.truss;
-      this.setState({truss});
-    });
+      this.setState({truss, errors: [], alerts: [`${material.name} successfully created`]});
+    };
+
+    let errorCallback = (errors) => {
+      this.setState({errors: errors.responseJSON, alerts: []});
+    };
+
+    ApiUtils.createMaterial(materialName, elasticModulus, this.state.truss.id, successCallback,
+      errorCallback);
   }
 
   render() {

@@ -50,12 +50,13 @@ const ApiUtils = {
     });
   },
 
-  createMaterial: (materialName, elasticModulus, trussId, successCallback) => {
+  createMaterial: (materialName, elasticModulus, trussId, successCallback, errorCallback) => {
     $.ajax({
       type: "POST",
       url: `api/trusses/${trussId}/materials`,
       data: {material: {name: materialName, elastic_modulus: elasticModulus, truss_id: trussId}},
-      success: successCallback
+      success: successCallback,
+      error: errorCallback
     });
   },
 

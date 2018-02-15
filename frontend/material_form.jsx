@@ -18,7 +18,6 @@ class MaterialForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.createMaterial(this.state.materialName, this.state.elasticModulus);
-    this.props.closeModal();
   }
 
   render() {

@@ -76,7 +76,7 @@ class NodeIndex extends React.Component {
                   <th>x</th>
                   <th>y</th>
                   <th>z</th>
-                  <th></th>
+                  <th> </th>
                 </tr>
               </thead>
               <tbody>
@@ -93,14 +93,10 @@ class NodeIndex extends React.Component {
             <Modal.Title><Glyphicon glyph="plus"></Glyphicon> Create New Node
             </Modal.Title>
           </Modal.Header>
-          <Modal.Body>
 
+          <Modal.Body>
             <Alerts errors={this.props.errors} alerts={this.props.alerts}/>
-            
-            <NodeForm
-              createNode={this.props.createNode}
-              closeModal={this.handleNewNodeFormClose.bind(this)}
-              />
+            <NodeForm createNode={this.props.createNode}/>
           </Modal.Body>
         </Modal>
       </div>
