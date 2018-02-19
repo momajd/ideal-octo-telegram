@@ -41,11 +41,20 @@ const ApiUtils = {
     });
   },
 
-  createSection: (sectionName, area, trussId, successCallback) => {
+  createSection: (sectionName, area, trussId, successCallback, errorCallback) => {
     $.ajax({
       type: "POST",
       url: `api/trusses/${trussId}/sections`,
       data: {section: {name: sectionName, area: area, truss_id: trussId}},
+      success: successCallback,
+      error: errorCallback
+    });
+  },
+
+  deleteSection: (trussId, sectionId, successCallback) => {
+    $.ajax({
+      type: "DELETE",
+      url: `api/trusses/${trussId}/sections/${sectionId}`,
       success: successCallback
     });
   },
@@ -57,6 +66,14 @@ const ApiUtils = {
       data: {material: {name: materialName, elastic_modulus: elasticModulus, truss_id: trussId}},
       success: successCallback,
       error: errorCallback
+    });
+  },
+
+  deleteMaterial: (trussId, materialId, successCallback) => {
+    $.ajax({
+      type: "DELETE",
+      url: `api/trusses/${trussId}/materials/${materialId}`,
+      success: successCallback
     });
   },
 

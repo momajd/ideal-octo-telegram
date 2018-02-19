@@ -1,6 +1,6 @@
 import React from 'react';
 import ApiUtils from './utils/api_utils';
-import InputTabs from './input_tabs';
+import ModelTabs from './model_tabs';
 import {Tabs, Tab, Panel} from 'react-bootstrap';
 import View from './three/view';
 
@@ -23,6 +23,10 @@ class Truss extends React.Component {
     });
   }
 
+  errorCallback(errors) {
+    this.setState({errors: errors.responseJSON, alerts: []});
+  }
+
   createNode(nodeName, xCoord, yCoord, zCoord) {
     let successCallback = (node) => {
       this.state.truss.nodes.push(node);
@@ -31,12 +35,8 @@ class Truss extends React.Component {
       this.view.addNode(node);
     };
 
-    let errorCallback = (errors) => {
-      this.setState({errors: errors.responseJSON, alerts: []});
-    };
-
     ApiUtils.createNode(nodeName, xCoord, yCoord, zCoord, this.state.truss.id, successCallback,
-      errorCallback);
+      this.errorCallback.bind(this));
   }
 
   deleteNode(nodeId) {
@@ -58,8 +58,15 @@ class Truss extends React.Component {
 
   }
 
-  createSection() {
+  createSection(sectionName, area) {
+    let successCallback = (section) => {
+      this.state.truss.sections.push(section);
+      let truss = this.state.truss;
+      this.setState({truss, errors: [], alerts: [`${section.name} successfully created`]});
+    };
 
+    ApiUtils.createSection(sectionName, area, this.state.truss.id, successCallback,
+      this.errorCallback.bind(this));
   }
 
   createMaterial(materialName, elasticModulus) {
@@ -69,12 +76,22 @@ class Truss extends React.Component {
       this.setState({truss, errors: [], alerts: [`${material.name} successfully created`]});
     };
 
-    let errorCallback = (errors) => {
-      this.setState({errors: errors.responseJSON, alerts: []});
-    };
-
     ApiUtils.createMaterial(materialName, elasticModulus, this.state.truss.id, successCallback,
-      errorCallback);
+      this.errorCallback.bind(this));
+  }
+
+  deleteMaterial(materialId) {
+    if (confirm("Are you sure you want to delete this material?")) {
+      ApiUtils.deleteMaterial(this.state.truss.id, materialId, (material) => {
+        let truss = this.state.truss;
+        for (var i = 0; i < truss.materials.length; i++) {
+          if (material.id === truss.materials[i].id) {break;}
+        }
+
+        truss.materials.splice(i, 1);
+        this.setState({truss});
+      });
+    }
   }
 
   render() {
@@ -82,14 +99,15 @@ class Truss extends React.Component {
       <div className="truss-container">
         <h3>{this.state.truss.name}</h3>
         <div id="three-js-container"></div>
-        <InputTabs truss={this.state.truss}
-          createNode={this.createNode.bind(this)}
+        <ModelTabs truss={this.state.truss}
           errors={this.state.errors}
           alerts={this.state.alerts}
+          createNode={this.createNode.bind(this)}
           deleteNode={this.deleteNode.bind(this)}
           createMember={this.createMember.bind(this)}
           createSection={this.createSection.bind(this)}
           createMaterial={this.createMaterial.bind(this)}
+          deleteMaterial={this.deleteMaterial.bind(this)}
           />
       </div>
     );

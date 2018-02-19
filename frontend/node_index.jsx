@@ -1,6 +1,5 @@
 import React from 'react';
 import {Table, Button, Modal, DropdownButton, MenuItem, Panel, Glyphicon} from 'react-bootstrap';
-import ApiUtils from './utils/api_utils';
 import NodeForm from './node_form';
 import Alerts from './alerts';
 

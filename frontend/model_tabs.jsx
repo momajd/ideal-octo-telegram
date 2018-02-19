@@ -1,9 +1,10 @@
 import React from 'react';
 import NodeIndex from './node_index';
 import MaterialIndex from './material_index';
+import SectionIndex from './section_index';
 import {Tabs, Tab} from 'react-bootstrap';
 
-class InputTabs extends React.Component {
+class ModelTabs extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -17,18 +18,21 @@ class InputTabs extends React.Component {
             createNode={this.props.createNode}
             deleteNode={this.props.deleteNode}
             errors={this.props.errors}
-            alerts={this.props.alerts}
-            />
+            alerts={this.props.alerts}/>
       	</Tab>
         <Tab eventKey={2} title="Materials">
           <MaterialIndex truss={this.props.truss}
             createMaterial={this.props.createMaterial}
+            deleteMaterial={this.props.deleteMaterial}
             errors={this.props.errors}
-            alerts={this.props.alerts}
-            />
+            alerts={this.props.alerts}/>
         </Tab>
         <Tab eventKey={3} title="Sections">
-          Tab 3 content
+          <SectionIndex truss={this.props.truss}
+            createSection={this.props.createSection}
+            deleteSection={this.props.deleteSection}
+            errors={this.props.errors}
+            alerts={this.props.alerts}/>
         </Tab>
       	<Tab eventKey={4} title="Members">
       		Tab 4 content
@@ -38,4 +42,4 @@ class InputTabs extends React.Component {
   }
 }
 
-export default InputTabs;
+export default ModelTabs;

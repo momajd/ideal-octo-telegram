@@ -18,6 +18,7 @@ class MaterialForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.createMaterial(this.state.materialName, this.state.elasticModulus);
+    this.setState({materialName: "", elasticModulus: ""});
   }
 
   render() {
@@ -35,7 +36,7 @@ class MaterialForm extends React.Component {
         <FormGroup>
           <ControlLabel>Elastic Modulus:</ControlLabel>
           <FormControl
-            value={this.state.xInput}
+            value={this.state.elasticModulus}
             onChange={this.handleElasticModulusChange.bind(this)}
             placeholder="ex: 29000"
             />
