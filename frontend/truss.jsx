@@ -8,7 +8,7 @@ class Truss extends React.Component {
   constructor() {
     super();
     this.state = {
-      truss: {nodes: [], materials: [], sections: []}, //for initial render
+      truss: {nodes: [], materials: [], sections: [], members: []}, //for initial render
       errors: [],
       alerts: []
     };
@@ -69,6 +69,20 @@ class Truss extends React.Component {
       this.errorCallback.bind(this));
   }
 
+  deleteSection(sectionId) {
+    if (confirm("Are you sure you want to delete this Section?")) {
+      ApiUtils.deleteSection(this.state.truss.id, sectionId, (section) => {
+        let truss = this.state.truss;
+        for (var i = 0; i < truss.sections.length; i++) {
+          if (section.id === truss.sections[i].id) {break;}
+        }
+
+        truss.sections.splice(i, 1);
+        this.setState({truss});
+      });
+    }
+  }
+
   createMaterial(materialName, elasticModulus) {
     let successCallback = (material) => {
       this.state.truss.materials.push(material);
@@ -81,7 +95,7 @@ class Truss extends React.Component {
   }
 
   deleteMaterial(materialId) {
-    if (confirm("Are you sure you want to delete this material?")) {
+    if (confirm("Are you sure you want to delete this Material?")) {
       ApiUtils.deleteMaterial(this.state.truss.id, materialId, (material) => {
         let truss = this.state.truss;
         for (var i = 0; i < truss.materials.length; i++) {
@@ -106,6 +120,7 @@ class Truss extends React.Component {
           deleteNode={this.deleteNode.bind(this)}
           createMember={this.createMember.bind(this)}
           createSection={this.createSection.bind(this)}
+          deleteSection={this.deleteSection.bind(this)}
           createMaterial={this.createMaterial.bind(this)}
           deleteMaterial={this.deleteMaterial.bind(this)}
           />

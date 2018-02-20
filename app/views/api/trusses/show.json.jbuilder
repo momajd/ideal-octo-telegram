@@ -9,6 +9,8 @@ json.sections @truss.sections, :id, :name, :area
 json.members @truss.members do |member|
   json.id member.id
   json.name member.name
+  json.section member.section
+  json.material member.material
 
   json.near_node do
     json.id member.near_node.id

@@ -83,8 +83,7 @@ class MaterialIndex extends React.Component {
 
             <Alerts errors={this.props.errors} alerts={this.props.alerts}/>
 
-            <MaterialForm createMaterial={this.props.createMaterial}
-              closeModal={this.handleNewMaterialFormClose.bind(this)}/>
+            <MaterialForm createMaterial={this.props.createMaterial}/>
           </Modal.Body>
         </Modal>
       </div>

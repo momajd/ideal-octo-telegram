@@ -83,8 +83,7 @@ class SectionIndex extends React.Component {
 
             <Alerts errors={this.props.errors} alerts={this.props.alerts}/>
 
-            <SectionForm createSection={this.props.createSection}
-              closeModal={this.handleNewSectionFormClose.bind(this)}/>
+            <SectionForm createSection={this.props.createSection}/>
           </Modal.Body>
         </Modal>
       </div>

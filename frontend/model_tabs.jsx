@@ -2,17 +2,23 @@ import React from 'react';
 import NodeIndex from './node_index';
 import MaterialIndex from './material_index';
 import SectionIndex from './section_index';
+import MemberIndex from './member_index';
 import {Tabs, Tab} from 'react-bootstrap';
 
 class ModelTabs extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {key: 1};
+  }
+
+  handleTabSelect(key) {
+    this.setState({key});
   }
 
   render() {
 
     return (
-      <Tabs defaultActiveKey={1} id="input-tabs">
+      <Tabs activeKey={this.state.key} onSelect={this.handleTabSelect.bind(this)} id="input-tabs">
       	<Tab eventKey={1} title="Nodes">
           <NodeIndex truss={this.props.truss}
             createNode={this.props.createNode}
@@ -35,7 +41,7 @@ class ModelTabs extends React.Component {
             alerts={this.props.alerts}/>
         </Tab>
       	<Tab eventKey={4} title="Members">
-      		Tab 4 content
+      		<MemberIndex truss={this.props.truss}/>
       	</Tab>
       </Tabs>
     );
